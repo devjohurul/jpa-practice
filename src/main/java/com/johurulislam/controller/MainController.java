@@ -1,5 +1,6 @@
 package com.johurulislam.controller;
 
+import com.johurulislam.dto.StudentDto;
 import com.johurulislam.model.Laptop;
 import com.johurulislam.model.Student;
 import com.johurulislam.service.LaptopService;
@@ -7,7 +8,7 @@ import com.johurulislam.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,23 +21,23 @@ public class MainController {
         this.studentService = studentService;
         this.laptopService = laptopService;
     }
+
     @GetMapping("student/{id}")
-    public ResponseEntity<Optional<Student>> getStudentById(@PathVariable Integer id) {
+    public ResponseEntity<Optional<StudentDto>> getStudentById(@PathVariable Integer id) {
     return new ResponseEntity<>(studentService.getStudentById(id),HttpStatus.OK);
     }
+
     @GetMapping("/student/all")
-    public List<Student> getAllStudents() {
+    public List<StudentDto> getAllStudents() {
         return studentService.getAllStudents();
     }
-    @GetMapping("student/g/{gender}")
-    public ResponseEntity<List<Student>> getStudentById(@PathVariable String gender) {
-        return new ResponseEntity<>(studentService.getStudentByGender(gender),HttpStatus.OK);
-    }
+
     @PostMapping("/addstudent")
-    public ResponseEntity<?> addStudent(@RequestBody Student student) {
+    public ResponseEntity<?> addStudent(@RequestBody StudentDto student) {
         studentService.addStudent(student);
         return new ResponseEntity<>("Save Student", HttpStatus.CREATED);
     }
+
     @PostMapping("/addlaptop")
     public ResponseEntity<?> addLaptop(@RequestBody Laptop laptop) {
         laptopService.addLaptop(laptop);
